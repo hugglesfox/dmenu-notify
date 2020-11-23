@@ -22,7 +22,7 @@ pub struct Notification {
 
 impl fmt::Display for Notification {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{} {}: {}", self.app_name, self.summary, self.body)
+        write!(f, "{}: {} - {}", self.app_name, self.summary, self.body)
     }
 }
 
