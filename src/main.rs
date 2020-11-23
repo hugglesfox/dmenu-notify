@@ -46,10 +46,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .case_insensitive()
         .with_font("monospace:size=10")
         .with_colors(
+            Some(Color("#3a3c4e")),
             Some(Color("#e9e9f4")),
-            Some(Color("#3a3c4e")),
             Some(Color("#b45bcf")),
-            Some(Color("#3a3c4e")),
+            Some(Color("#e9e9f4")),
         )
         .execute(&notifications);
 
