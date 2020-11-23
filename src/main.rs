@@ -1,8 +1,10 @@
 //! # Dmenu Notify
 //!
 //! A dmenu interface for [notifyd](https://github.com/hugglesfox/notifyd).
+//!
+//! Selecting an item from the menu is the equivilant to closing the notification
 
-use dmenu_facade::DMenu;
+use dmenu_facade::{Color, DMenu};
 use serde::Deserialize;
 use std::fmt;
 use zbus::dbus_proxy;
@@ -40,7 +42,16 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let proxy = NotifydProxy::new(&connection)?;
 
     let notifications = proxy.get_notification_queue()?;
-    let chosen = DMenu::default().execute(&notifications);
+    let chosen = DMenu::default()
+        .case_insensitive()
+        .with_font("monospace:size=10")
+        .with_colors(
+            Some(Color("#e9e9f4")),
+            Some(Color("#3a3c4e")),
+            Some(Color("#b45bcf")),
+            Some(Color("#3a3c4e")),
+        )
+        .execute(&notifications);
 
     if let Ok(notification) = chosen {
         proxy.close_notification(notification.id)?;
