@@ -3,12 +3,15 @@
 //! A dmenu interface for [notifyd](https://github.com/hugglesfox/notifyd).
 
 use dmenu_facade::DMenu;
+use serde::Deserialize;
 use std::fmt;
 use zbus::dbus_proxy;
 use zbus::fdo;
+use zvariant::derive::Type;
 
 /// A notification from dbus
-struct Notification {
+#[derive(Debug, Deserialize, Type)]
+pub struct Notification {
     pub id: u32,
     pub app_name: String,
     pub summary: String,
@@ -37,9 +40,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let proxy = NotifydProxy::new(&connection)?;
 
     let notifications = proxy.get_notification_queue()?;
-    let chosen = Dmenu::default().execute(&notifications);
+    let chosen = DMenu::default().execute(&notifications);
 
     if let Ok(notification) = chosen {
-        proxy.close_notification(notification.id);
+        proxy.close_notification(notification.id)?;
     }
+
+    Ok(())
 }

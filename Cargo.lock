@@ -46,6 +46,7 @@ name = "dmenu-notify"
 version = "0.1.0"
 dependencies = [
  "dmenu_facade",
+ "serde",
  "zbus",
  "zvariant",
 ]
