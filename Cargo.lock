@@ -53,8 +53,9 @@ dependencies = [
 
 [[package]]
 name = "dmenu_facade"
-version = "0.2.0"
-source = "git+https://github.com/hugglesfox/dmenu_facade_rs#385de5890ae44cdc5dc0c895016b748804a4df5c"
+version = "0.3.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "372af688af899981cb3d9d0b23de762c906d6367325d3a7304f7ad90c4b74d0f"
 
 [[package]]
 name = "enumflags2"

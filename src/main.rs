@@ -2,7 +2,8 @@
 //!
 //! A dmenu interface for [notifyd](https://github.com/hugglesfox/notifyd).
 //!
-//! Selecting an item from the menu is the equivilant to closing the notification
+//! Selecting an item from the menu is the equivilant to closing the notification.
+//! Notifications are displayed sorted by urgency.
 
 use dmenu_facade::{Color, DMenu};
 use serde::Deserialize;
@@ -18,6 +19,7 @@ pub struct Notification {
     pub app_name: String,
     pub summary: String,
     pub body: String,
+    pub urgency: u32,
 }
 
 impl fmt::Display for Notification {
@@ -41,7 +43,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let connection = zbus::Connection::new_session()?;
     let proxy = NotifydProxy::new(&connection)?;
 
-    let notifications = proxy.get_notification_queue()?;
+    let mut notifications = proxy.get_notification_queue()?;
+    notifications.sort_by(|a, b| b.urgency.partial_cmp(&a.urgency).unwrap());
+
     let chosen = DMenu::default()
         .case_insensitive()
         .with_font("monospace:size=10")
