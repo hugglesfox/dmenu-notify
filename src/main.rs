@@ -5,6 +5,9 @@
 //! Selecting an item from the menu is the equivilant to closing the notification.
 //! Notifications are displayed sorted by urgency.
 
+#[macro_use]
+extern crate clap;
+
 use dmenu_facade::{Color, DMenu};
 use serde::Deserialize;
 use std::fmt;
@@ -34,12 +37,16 @@ impl fmt::Display for Notification {
     default_path = "/org/freedesktop/Notifications"
 )]
 trait Notifyd {
+    /// Get notifications
     fn get_notification_queue(&self) -> fdo::Result<Vec<Notification>>;
 
+    /// Close a notification
     fn close_notification(&self, id: u32) -> fdo::Result<()>;
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
+    app_from_crate!().get_matches();
+
     let connection = zbus::Connection::new_session()?;
     let proxy = NotifydProxy::new(&connection)?;
 
