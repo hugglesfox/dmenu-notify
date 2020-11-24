@@ -7,7 +7,7 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-dmenu_facade = { git = "https://github.com/hugglesfox/dmenu_facade_rs", version = "0.2.0" } 
+dmenu_facade = "0.3.0"
 serde = { version = "1.0.111", features = ["derive"] }
 zbus = "1.3.0"
 zvariant = "2.3.0"
